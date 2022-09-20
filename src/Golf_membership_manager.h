@@ -3,13 +3,11 @@
 
 #include <iostream>
 #include "Listener.h"
-#include "mfrc522.h"
 #include "Monitor.h"
 
 class Golf_membership_manager
 {
 private:
-    mfrc522* rfid;
     Listener* listener;
 
 public:

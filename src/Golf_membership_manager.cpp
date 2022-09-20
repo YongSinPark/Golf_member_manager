@@ -1,7 +1,7 @@
 #include "Golf_membership_manager.h"
 
 Golf_membership_manager::Golf_membership_manager()
-: rfid(new mfrc522(new SPI(10, 3000000))), listener(new Listener(rfid))
+: listener(new Listener())
 //mfrc52* rfid = new mfrc522(new SPI(10, 3000000))
 {
 

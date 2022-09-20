@@ -10,7 +10,12 @@ Controller::~Controller()
 
 }
 
-void Controller::Update_event(uint8_t* data)
+void Controller::Update_event(Device_data data)
 {
-     monitor->Print(data, 16);
+    cout << data.dev_name << " : ";
+    for(const auto data : data.dev_data)
+    {
+        cout << data << " ";
+    }
+    cout << endl;
 }
