@@ -1,19 +1,15 @@
 #include <iostream>
 #include "mfrc522.h"
 #include "Listener.h"
+#include "Golf_membership_manager.h"
 
 using namespace std;
 
 int main()
 {
-    mfrc522 rfid(new SPI(10, 3000000));
-    Listener* listener = new Listener(&rfid);
+    Golf_membership_manager golf_membership_manager;
 
-    while(1)
-    {
-        listener->Check_event();
-        delay(1000);
-        cout << "hihi" << endl;
-    }
+    golf_membership_manager.Run();
+
     return 0;
 }
