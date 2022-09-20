@@ -7,6 +7,7 @@ add_executable(${PROJECT_NAME}
     ./src/Golf_membership_manager.cpp
     ./src/app/Listener/Listener.cpp
     ./src/app/Controller/Controller.cpp
+    ./src/app/Members_entity/Members_entity.cpp
     ./src/hw/rfid/mfrc522.cpp
     ./src/hw/rfid/Card_reader.cpp
     ./src/hw/spi/SPI.cpp
@@ -18,6 +19,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ./src/app/Listener
     ./src/app/Controller
     ./src/app/Model
+    ./src/app/Members_entity
     ./src/hw/rfid
     ./src/hw/spi
     ./src/hw/Monitor
