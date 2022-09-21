@@ -8,7 +8,7 @@ struct Members_info
     char name[10];
     char address[40];
     char phoneNumber[15];
-    int cardNum[5];
+    uint8_t cardNum[5];
 };
 
 #endif

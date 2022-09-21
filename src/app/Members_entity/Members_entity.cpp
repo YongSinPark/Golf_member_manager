@@ -23,13 +23,15 @@ void Members_entity::Load_members_info()
 }
 void Members_entity::Print_member_info()
 {
-    cout << vecMembers_list[1000].id << 
-    vecMembers_list[1000].name << 
-    vecMembers_list[1000].address<< 
-    vecMembers_list[1000].phoneNumber<< 
-    vecMembers_list[1000].cardNum[0] <<
-    vecMembers_list[1000].cardNum[1] <<
-    vecMembers_list[1000].cardNum[2] <<
-    vecMembers_list[1000].cardNum[3] <<
-    vecMembers_list[1000].cardNum[4] << endl;
+    printf("%04d %s %s %s %02d %02d %02d %02d %02d \n", 
+    vecMembers_list[1000].id,
+    vecMembers_list[1000].name,
+    vecMembers_list[1000].address,
+    vecMembers_list[1000].phoneNumber,
+    vecMembers_list[1000].cardNum[0],
+    vecMembers_list[1000].cardNum[1],
+    vecMembers_list[1000].cardNum[2],
+    vecMembers_list[1000].cardNum[3],
+    vecMembers_list[1000].cardNum[4]
+    );
 }
