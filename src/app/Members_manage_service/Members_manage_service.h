@@ -6,7 +6,7 @@
 #include "Members_entity.h"
 #include "Members_info.h"
 
-enum {CARD_READER, CARD_REGISTER};
+enum {CARD_READER, CARD_REGISTER, CARD_DELETE};
 
 class Members_manage_service
 {    

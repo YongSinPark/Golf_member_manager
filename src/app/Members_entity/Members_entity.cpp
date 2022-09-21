@@ -105,7 +105,7 @@ bool Members_entity::Del_member_info(uint8_t* card_num)
 
     for(itr_member = vecMembers_list.begin(); itr_member != vecMembers_list.end(); itr_member++)
     {
-        if(memcmp(itr_member->card_num, card_num, sizeof(itr_member->card_num)))
+        if(memcmp(itr_member->card_num, card_num, sizeof(itr_member->card_num)) == 0)
         {
             vecMembers_list.erase(itr_member);
             return true;

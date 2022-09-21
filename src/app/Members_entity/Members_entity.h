@@ -8,11 +8,11 @@
 class Members_entity
 {
 private:
-    std::vector<Members_info> vecMembers_list;
     Members_info members_info;
     FILE* fpDB_data;
 
 public:
+    std::vector<Members_info> vecMembers_list;
     Members_entity();
     virtual ~Members_entity();
     void Load_members_info();

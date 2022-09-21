@@ -19,7 +19,7 @@ void Listener::Check_event()
     if(Check_rfid())
     {
        controller->Update_event(rfid->Get_card_number());
-       printf("check rfid update event\n");
+       printf("\n");
     }
     if(manage_button->Check_button()) 
     {
