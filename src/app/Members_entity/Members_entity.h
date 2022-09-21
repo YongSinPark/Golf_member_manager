@@ -16,10 +16,14 @@ public:
     Members_entity();
     virtual ~Members_entity();
     void Load_members_info();
-    //void Add_member_info(Members_info member);
-    //void Delete_member_info(Members_info member);
-    //void Make_DB_members_info();
-    void Print_member_info();
+    void Add_member_info(Members_info member);
+    bool Del_member_info(uint8_t* card_num);
+    void Print_member_info(int index);
+    void Print_member_info(std::string name);
+    void Print_member_info(uint8_t* card_num);
+    bool Find_member_info(std::string name);
+    bool Find_member_info(uint8_t* card_num);
+    void Memory_to_DB();
 };
 
 #endif

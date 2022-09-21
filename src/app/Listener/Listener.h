@@ -5,12 +5,15 @@
 #include "mfrc522.h"
 #include "Controller.h"
 #include "Card_reader.h"
+#include "Manage_button.h"
+
 class Listener
 {
 private:
     Card_reader* rfid;
-    uint8_t rfid_data[16];
     Controller* controller;
+    Manage_button* manage_button;
+    uint8_t rfid_data[16];
 
 public:
     Listener();

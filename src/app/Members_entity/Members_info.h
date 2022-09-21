@@ -5,10 +5,10 @@
 struct Members_info
 {
     int id;
-    char name[10];
+    char name[20];
     char address[40];
-    char phoneNumber[15];
-    uint8_t cardNum[5];
+    char phone_number[15];
+    uint8_t card_num[5];
 };
 
 #endif

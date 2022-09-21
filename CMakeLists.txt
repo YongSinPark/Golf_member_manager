@@ -8,10 +8,13 @@ add_executable(${PROJECT_NAME}
     ./src/app/Listener/Listener.cpp
     ./src/app/Controller/Controller.cpp
     ./src/app/Members_entity/Members_entity.cpp
+    ./src/app/Members_manage_service/Members_manage_service.cpp
     ./src/hw/rfid/mfrc522.cpp
     ./src/hw/rfid/Card_reader.cpp
     ./src/hw/spi/SPI.cpp
     ./src/hw/Monitor/Monitor.cpp
+    ./src/hw/Button/Button.cpp
+    ./src/hw/Button/Manage_button.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -20,9 +23,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ./src/app/Controller
     ./src/app/Model
     ./src/app/Members_entity
+    ./src/app/Members_manage_service
     ./src/hw/rfid
     ./src/hw/spi
     ./src/hw/Monitor
+    ./src/hw/Button
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
