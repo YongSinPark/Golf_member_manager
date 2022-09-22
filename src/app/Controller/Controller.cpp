@@ -27,4 +27,9 @@ void Controller::Update_event(Device_data data)
     {
         members_manage_service->Updata_state_event(data.dev_name);
     }
+
+    if(data.dev_name == "Update_button")
+    {
+        members_manage_service->Updata_state_event(data.dev_name);
+    }
 }

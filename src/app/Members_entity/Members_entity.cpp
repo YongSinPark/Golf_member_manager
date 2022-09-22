@@ -114,6 +114,21 @@ bool Members_entity::Del_member_info(uint8_t* card_num)
     return false;
 }
 
+bool Change_member_info(uint8_t* card_num, Members_info member)
+{
+    std::vector<Members_info>::iterator itr_member;
+
+    for(itr_member = vecMembers_list.begin(); itr_member != vecMembers_list.end(); itr_member++)
+    {
+        if(memcmp(itr_member->card_num, card_num, sizeof(itr_member->card_num)) == 0)
+        {
+            vecMembers_list.push(member);
+            return true;
+        }   
+    }
+    return false;
+}
+
 void Members_entity::Memory_to_DB()
 {
     fpDB_data = fopen("memberLists.bin", "w");

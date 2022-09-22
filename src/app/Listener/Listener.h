@@ -13,6 +13,7 @@ private:
     Card_reader* rfid;
     Controller* controller;
     Manage_button* manage_button;
+    Update_button* update_button;
     uint8_t rfid_data[16];
 
 public:

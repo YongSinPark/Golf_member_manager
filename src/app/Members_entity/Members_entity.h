@@ -18,6 +18,7 @@ public:
     void Load_members_info();
     void Add_member_info(Members_info member);
     bool Del_member_info(uint8_t* card_num);
+    bool Change_member_info(uint8_t* card_num);
     void Print_member_info(int index);
     void Print_member_info(std::string name);
     void Print_member_info(uint8_t* card_num);

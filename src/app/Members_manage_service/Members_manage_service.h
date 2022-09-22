@@ -5,13 +5,15 @@
 #include <cstring>
 #include "Members_entity.h"
 #include "Members_info.h"
+#include "View.h"
 
-enum {CARD_READER, CARD_REGISTER, CARD_DELETE};
+enum {CARD_READER, CARD_REGISTER, CARD_DELETE, CARD_CHANGE};
 
 class Members_manage_service
 {    
 private:
     Members_entity* members_entity;
+    View* view;
     int members_manager_state;
 
 public:
