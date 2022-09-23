@@ -20,16 +20,13 @@ void Listener::Check_event()
     if(Check_rfid())
     {
        controller->Update_event(rfid->Get_card_number());
-       printf("Card scan! Wait a minuit!\n");
     }
     if(manage_button->Check_button()) 
     {
-        printf("mode_button\n");
         controller->Update_event(manage_button->Get_button_data());
     }
     if(update_button->Check_button())
     {
-        printf("update_button\n");
         controller->Update_event(update_button->Get_button_data());
     }
 }

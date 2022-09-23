@@ -40,6 +40,8 @@ void Members_entity::Print_member_info(int index)
         fprintf(stderr, "out of range member count!\n");
         return;
     }
+    printf("=================================================================\n");
+    printf("Member Information : ");
     printf("%05d %s %s %s %0x-%0x-%0x-%0x-%0x \n", 
     vecMembers_list[index].id,
     vecMembers_list[index].name,
@@ -51,6 +53,7 @@ void Members_entity::Print_member_info(int index)
     vecMembers_list[index].card_num[3],
     vecMembers_list[index].card_num[4]
     );
+    printf("=================================================================\n");
 }
 
 void Members_entity::Print_member_info(std::string name)

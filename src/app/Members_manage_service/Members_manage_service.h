@@ -24,6 +24,8 @@ public:
     void Updata_state_event(std::string dev_name);
     void Check_card_num(uint8_t* card_num);
     void Set_com_dev(Com_dev* com_dev);
+    void Card_resister(uint8_t* card_num);
+    void Card_change(uint8_t* card_num);
 };
 
 #endif
