@@ -1,25 +1,30 @@
-#ifndef __VIEW_H__
-#define __VIEW_H__
+#ifndef VIEWS_H
+#define VIEWS_H
 
 #include <iostream>
 #include <string>
+#include "I2C.h"
 #include "LCD.h"
 #include "Monitor.h"
 #include "Led.h"
 
-class View
+class Views
 {
 private:
     LCD* lcd;
-    Led* led;
+    I2C* i2c;
+    Led* led_1;
+    Led* led_2;
+    Led* led_3;
+    Led* led_4;
     Monitor* monitor;
 
 public:
-    View();
-    virtual View();
+    Views();
+    virtual ~Views();
     void Monitor_view(std::string str);
     void Lcd_view(std::string str);
     void Led_view(std::string str);
-}
+};
 
-#endif  /*__VIEW_H__*/
+#endif

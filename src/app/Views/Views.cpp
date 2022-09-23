@@ -1,51 +1,56 @@
-#include "View.h"
+#include "Views.h"
 
-View::View()
+Views::Views()
 {
-    lcd = new LCD();
+    lcd = new LCD(new I2C("/dev/i2c-1", 0x27));
     monitor = new Monitor();
     led_1 = new Led(25);
     led_2 = new Led(24);
     led_3 = new Led(23);
     led_4 = new Led(22);
+    Monitor_view("READER_MODE");
+    Lcd_view("READER_MODE");
 }
 
-View::~View()
+Views::~Views()
 {
-
+    delete lcd;
+    delete monitor;
+    delete led_1;
+    delete led_2;
+    delete led_3;
+    delete led_4;
 }
 
-void View::Monitor_view(std::string str)
+void Views::Monitor_view(std::string str)
 {
-char buff[20];
-
     if(str == "READER_MODE")
     {
         system("clear");
-        prinitf("<READER_MODE>\n");
-        printf("Detect Card!!\n");    
+        printf("<READER_MODE>\n");
+        printf("Detect Card!!\n\n");    
     }
     if(str == "RESISTER_MODE")
     {
         system("clear");
-        prinitf("<RESISTER_MODE>\n");
-        printf("Detect Card!!\n");  
+        printf("<RESISTER_MODE>\n");
+        printf("Detect Card!!\n\n");  
     }
     if(str == "DELETE_MODE")
     {
         system("clear");
-        prinitf("<DELETE_MODE>\n");
-        printf("Detect Card!!\n");    
+        printf("<DELETE_MODE>\n");
+        printf("Detect Card!!\n\n");    
     }
     if(str == "CHANGE_MODE")
     {
         system("clear");
-        prinitf("<CHANGE_MODE>\n");
-        printf("Detect Card!!\n");    
+        printf("<CHANGE_MODE>\n");
+        printf("Detect Card!!\n\n");    
     }
 }
 
-void View::Lcd_view(std::string str);
+void Views::Lcd_view(std::string str)
 {
     char buff[20];
 
@@ -79,10 +84,8 @@ void View::Lcd_view(std::string str);
     }
 }
 
-void View::Led_view(std::string str)
+void Views::Led_view(std::string str)
 {
-char buff[20];
-
     if(str == "READER_MODE")
     {
         led_1->On();    

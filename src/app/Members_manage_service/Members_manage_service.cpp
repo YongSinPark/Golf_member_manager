@@ -3,10 +3,11 @@
 
 using namespace std;
 
-Members_manage_service::Members_manage_service()
+Members_manage_service::Members_manage_service(Com_dev* com_dev)
 {
     members_entity = new Members_entity();
-    view = new View();
+    views = new Views();
+    this->com_dev = com_dev;
     members_manager_state = CARD_READER;
 }
 
@@ -17,7 +18,7 @@ Members_manage_service::~Members_manage_service()
 
 void Members_manage_service::Updata_state_event(std::string dev_name)
 {
-    if(dev_name == "Update_button") Members_entity->Memory_to_DB();
+    if(dev_name == "Update_button") members_entity->Memory_to_DB();
     
     switch(members_manager_state)
     {
@@ -25,36 +26,36 @@ void Members_manage_service::Updata_state_event(std::string dev_name)
             if(dev_name == "Mode_button")
             {
                 members_manager_state = CARD_REGISTER;
-                view->Monitor_view("RESISTER_MODE");
-                view->Lcd_view("RESISTER_MODE");
-                view->Led_view("RESISTER_MODE");
+                views->Monitor_view("RESISTER_MODE");
+                views->Lcd_view("RESISTER_MODE");
+                views->Led_view("RESISTER_MODE");
             }
             break;
         case CARD_REGISTER:
             if(dev_name == "Mode_button")
             {
                 members_manager_state = CARD_DELETE;
-                view->Monitor_view("DELETE_MODE");
-                view->Lcd_view("DELETE_MODE");
-                view->Led_view("DELETE_MODE");
+                views->Monitor_view("DELETE_MODE");
+                views->Lcd_view("DELETE_MODE");
+                views->Led_view("DELETE_MODE");
             }
             break;
         case CARD_DELETE:
             if(dev_name == "Mode_button")
             {
                 members_manager_state = CARD_CHANGE;
-                view->Monitor_view("CHANGE_MODE");
-                view->Lcd_view("CHANGE_MODE");
-                view->Led_view("CHANGE_MODE");
+                views->Monitor_view("CHANGE_MODE");
+                views->Lcd_view("CHANGE_MODE");
+                views->Led_view("CHANGE_MODE");
             }
             break;
         case CARD_CHANGE:
             if(dev_name == "Mode_button")
             {
                 members_manager_state = CARD_READER;
-                view->Monitor_view("READER_MODE");
-                view->Lcd_view("READER_MODE");
-                view->Led_view("READER_MODE");
+                views->Monitor_view("READER_MODE");
+                views->Lcd_view("READER_MODE");
+                views->Led_view("READER_MODE");
             }
             break;
     }
@@ -68,9 +69,10 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
 
         case CARD_READER:
             if(members_entity->Find_member_info(card_num))
-                {
+            {
                 members_entity->Print_member_info(card_num);
                 printf("Registered Member!\n");
+                com_dev->Send_data(card_num);
             }
             else printf("Not Registered Member!\n");
             break;
@@ -152,7 +154,7 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
                 {
                     char tmp = temp_member.id;
                     
-                    members_entity->Del_member_info(card_num);
+                    // members_entity->Del_member_info(card_num);
                     temp_member.id = tmp;
                 
                     char name[20], address[40], phone_number[15];
@@ -184,4 +186,9 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
             else printf("Not Registered Member!\n Retry detect card.\n");
             break;
     }
+}
+
+void Members_manage_service::Set_com_dev(Com_dev* com_dev)
+{
+    this->com_dev = com_dev;
 }

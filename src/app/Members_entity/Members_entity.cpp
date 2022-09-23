@@ -114,7 +114,7 @@ bool Members_entity::Del_member_info(uint8_t* card_num)
     return false;
 }
 
-bool Change_member_info(uint8_t* card_num, Members_info member)
+bool Members_entity::Change_member_info(uint8_t* card_num, Members_info member)
 {
     std::vector<Members_info>::iterator itr_member;
 
@@ -122,7 +122,8 @@ bool Change_member_info(uint8_t* card_num, Members_info member)
     {
         if(memcmp(itr_member->card_num, card_num, sizeof(itr_member->card_num)) == 0)
         {
-            vecMembers_list.push(member);
+            //vecMembers_list.push(member);
+            *itr_member = member;
             return true;
         }   
     }
@@ -147,4 +148,5 @@ void Members_entity::Memory_to_DB()
     }
     fclose(fpDB_data);
     fclose(fpDB_data2);
+    printf("Update complete!\n");
 }
