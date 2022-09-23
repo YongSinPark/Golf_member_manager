@@ -237,7 +237,7 @@ void Members_manage_service::Card_change(uint8_t* card_num)
 
     cout << "phone_number : ";
     cin >> phone_number;
-
+    temp_member.id = temp_member.id;
     strcpy(temp_member.name, name);
     strcpy(temp_member.address, address);
     strcpy(temp_member.phone_number, phone_number);

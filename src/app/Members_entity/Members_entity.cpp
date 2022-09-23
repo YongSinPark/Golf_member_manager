@@ -125,8 +125,9 @@ bool Members_entity::Change_member_info(uint8_t* card_num, Members_info member)
     {
         if(memcmp(itr_member->card_num, card_num, sizeof(itr_member->card_num)) == 0)
         {
-            //vecMembers_list.push(member);
-            *itr_member = member;
+            vecMembers_list.erase(itr_member);
+            vecMembers_list.insert(itr_member, member);
+           // *itr_member = member;
             return true;
         }   
     }
