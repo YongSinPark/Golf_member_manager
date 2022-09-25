@@ -1,9 +1,9 @@
 #include "Controller.h"
 
-Controller::Controller()
+Controller::Controller(Members_manage_service* members_manage_service)
 {
     monitor = new Monitor();
-    members_manage_service = new Members_manage_service();
+    this->members_manage_service = members_manage_service;
 }
 
 Controller::~Controller()
@@ -24,6 +24,19 @@ void Controller::Update_event(Device_data data)
     }
 
     if(data.dev_name == "Mode_button")
+    {
+        members_manage_service->Updata_state_event(data.dev_name);
+    }
+
+    if(data.dev_name == "Update_button")
+    {
+        members_manage_service->Updata_state_event(data.dev_name);
+    }
+    if(data.dev_name == "Exit_button")
+    {
+        members_manage_service->Updata_state_event(data.dev_name);
+    }
+    if(data.dev_name == "Finder_button")
     {
         members_manage_service->Updata_state_event(data.dev_name);
     }

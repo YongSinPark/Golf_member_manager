@@ -18,7 +18,6 @@ bool Manage_button::Check_button()
 
 Device_data Manage_button::Get_button_data()
 {
-    //button_data.dev_name = "Mode_button";
     button_data.dev_data.clear();
     button_data.dev_data.push_back(1);
     

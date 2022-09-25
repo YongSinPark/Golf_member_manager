@@ -13,10 +13,13 @@ private:
     Card_reader* rfid;
     Controller* controller;
     Manage_button* manage_button;
+    Manage_button* update_button;
+    Manage_button* exit_button;
+    Manage_button* finder_button;
     uint8_t rfid_data[16];
 
 public:
-    Listener();
+    Listener(Controller* controller);
     virtual ~Listener();
     void Check_event();
     bool Check_rfid();

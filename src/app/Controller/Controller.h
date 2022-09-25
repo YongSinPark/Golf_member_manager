@@ -14,7 +14,7 @@ private:
     Members_manage_service* members_manage_service;
 
 public:
-    Controller();
+    Controller(Members_manage_service* members_manage_service);
     virtual ~Controller();
     void Update_event(Device_data data);
 };
