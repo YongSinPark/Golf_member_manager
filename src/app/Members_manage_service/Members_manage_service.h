@@ -9,6 +9,8 @@
 #include "Com_dev.h"
 
 enum {CARD_READER, CARD_REGISTER, CARD_DELETE, CARD_CHANGE};
+enum {NAME_SEARCH_MODE, ADDRESS_SEARCH_MODE, PHONE_NUMBER_SEARCH_MODE};
+
 
 class Members_manage_service
 {    
@@ -17,6 +19,7 @@ private:
     Views* views;
     Com_dev* com_dev;
     int members_manager_state;
+    int find_mode_state;
 
 public:
     Members_manage_service(Com_dev* com_dev);
@@ -26,6 +29,8 @@ public:
     void Set_com_dev(Com_dev* com_dev);
     void Card_resister(uint8_t* card_num);
     void Card_change(uint8_t* card_num);
+    void Search_member();
+    void Exit_program();
 };
 
 #endif

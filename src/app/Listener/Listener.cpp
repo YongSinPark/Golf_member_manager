@@ -8,6 +8,8 @@ Listener::Listener(Controller* controller)
     this->controller = controller;
     manage_button = new Manage_button(27, "Mode_button");
     update_button = new Manage_button(28, "Update_button");
+    exit_button = new Manage_button(29, "Exit_button");
+    finder_button = new Manage_button(6, "Finder_button");
 }
 
 Listener::~Listener()
@@ -28,6 +30,15 @@ void Listener::Check_event()
     if(update_button->Check_button())
     {
         controller->Update_event(update_button->Get_button_data());
+    }
+    if(exit_button->Check_button())
+    {
+        controller->Update_event(exit_button->Get_button_data());
+    }
+    if(finder_button->Check_button())
+    {
+        printf("finder button click\n");
+        controller->Update_event(finder_button->Get_button_data());
     }
 }
 

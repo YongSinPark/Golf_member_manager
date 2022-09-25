@@ -25,13 +25,19 @@ void Controller::Update_event(Device_data data)
 
     if(data.dev_name == "Mode_button")
     {
-        printf("mode_button_controller\n");
         members_manage_service->Updata_state_event(data.dev_name);
     }
 
     if(data.dev_name == "Update_button")
     {
-        printf("update_button_controller\n");
+        members_manage_service->Updata_state_event(data.dev_name);
+    }
+    if(data.dev_name == "Exit_button")
+    {
+        members_manage_service->Updata_state_event(data.dev_name);
+    }
+    if(data.dev_name == "Finder_button")
+    {
         members_manage_service->Updata_state_event(data.dev_name);
     }
 }

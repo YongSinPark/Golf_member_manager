@@ -1,6 +1,7 @@
 #include "Members_manage_service.h"
 #include <iostream>
 #include <wiringPi.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -10,6 +11,7 @@ Members_manage_service::Members_manage_service(Com_dev* com_dev)
     views = new Views();
     this->com_dev = com_dev;
     members_manager_state = CARD_READER;
+    find_mode_state = NAME_SEARCH_MODE;
 }
 
 Members_manage_service::~Members_manage_service()
@@ -20,7 +22,11 @@ Members_manage_service::~Members_manage_service()
 void Members_manage_service::Updata_state_event(std::string dev_name)
 {
     if(dev_name == "Update_button") members_entity->Memory_to_DB();
-    
+
+    if(dev_name == "Exit_button") Exit_program();
+
+    if(dev_name == "Finder_button") Search_member();
+
     switch(members_manager_state)
     {
         case CARD_READER:
@@ -65,7 +71,7 @@ void Members_manage_service::Updata_state_event(std::string dev_name)
 
 void Members_manage_service::Check_card_num(uint8_t* card_num)
 {
-   switch(members_manager_state)
+    switch(members_manager_state)
     {
         char select;
 
@@ -100,7 +106,7 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
         case CARD_REGISTER:
             if(members_entity->Find_member_info(card_num))
             {
-                printf("\nCheck Member : ");
+                printf("\n<Check Member>\n");
                 members_entity->Print_member_info(card_num);
                 printf("\nRegistered Member!\n");
                 printf("Change the information?(y/n) : ");
@@ -155,7 +161,14 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
                 printf("\nChange member information\n\n");
                 printf("Really change the information?(y/n) : ");
                 cin >> select;
-                if(select == 'y') Card_change(card_num);
+                if(select == 'y')
+                {
+                    if(members_entity->Change_member_info(card_num))
+                    {
+                        members_manager_state = CARD_DELETE;
+                        Updata_state_event("CHANGE_MODE");
+                    }
+                }
                 else 
                 {
                     members_manager_state = CARD_DELETE;
@@ -225,25 +238,84 @@ void Members_manage_service::Card_resister(uint8_t* card_num)
     }
 }
 
-void Members_manage_service::Card_change(uint8_t* card_num)
+void Members_manage_service::Search_member()
 {
-    Members_info temp_member;
-    char name[20], address[40], phone_number[15];
-    cout << "name : ";
-    cin >> name;
+    string keyword;
+    char select;
 
-    cout << "address : ";
-    cin >> address;
+    system("clear");
+    cout << "<SEARCH MODE>" << endl;
+    views->Lcd_view("SEARCH_MODE");
 
-    cout << "phone_number : ";
-    cin >> phone_number;
-    temp_member.id = temp_member.id;
-    strcpy(temp_member.name, name);
-    strcpy(temp_member.address, address);
-    strcpy(temp_member.phone_number, phone_number);
-    memcpy(temp_member.card_num, card_num, sizeof(temp_member.card_num));
-    
-    members_entity->Change_member_info(card_num, temp_member);
+    switch(find_mode_state)
+    {
+    case NAME_SEARCH_MODE:
+        printf("Search member(name / exit->READER_MODE, mode->CHANGE SEARCH_MODE) : ");
+        cin >> keyword;
+        if(members_entity->Find_member_info_by_name(keyword)) 
+        {
+            cout << "Modified information?(y/n) : ";
+            cin >> select;
+            if(select == 'y') members_entity->Change_member_info(members_entity->Find_member_card_num(keyword));
+            else cout << "Press button or Detect card...\n";
+        }
+        else cout << "Not found!\n" << "Press button or Detect card...\n";
+        if(keyword == "exit")
+        {
+            system("clear");
+            views->Monitor_view("READER_MODE");
+            views->Lcd_view("READER_MODE");
+        }
+        if(keyword == "mode")
+        {
+            find_mode_state = ADDRESS_SEARCH_MODE;
+            Updata_state_event("Finder_button");
+        }
+    break;
+    case ADDRESS_SEARCH_MODE:
+        printf("Search member(address / exit->READER_MODE, mode->CHANGE SEARCH_MODE) : ");
+        cin >> keyword;
+        if(members_entity->Find_member_info_by_address(keyword)) cout << "Press button or Detect card...\n";
+        if(keyword == "exit")
+        {
+            system("clear");
+            views->Monitor_view("READER_MODE");
+            views->Lcd_view("READER_MODE");
+        }
+        if(keyword == "mode")
+        {
+            find_mode_state = PHONE_NUMBER_SEARCH_MODE;
+            Updata_state_event("Finder_button");
+        }
+        cout << "Not found!\n" << "Press button or Detect card...\n";
+    break;
+    case PHONE_NUMBER_SEARCH_MODE:
+        printf("Search member(phone_number(000-0000-0000) / exit->READER_MODE, mode->CHANGE SEARCH_MODE) : ");
+        cin >> keyword;
+        if(members_entity->Find_member_info_by_phone_num(keyword)) cout << "Press button or Detect card...\n";
+        if(keyword == "exit") 
+        {
+            system("clear");
+            views->Monitor_view("READER_MODE");
+            views->Lcd_view("READER_MODE");
+        }
+        if(keyword == "mode") 
+        {
+            find_mode_state = NAME_SEARCH_MODE;
+            Updata_state_event("Finder_button");
+        }
+        cout << "Not found!\n" << "Press button or Detect card...\n";
+    break;
+    }
+}
 
-    printf("Member Resistered!\n");
+void Members_manage_service::Exit_program()
+{
+        printf("\nExit Program...\n");
+        views->Lcd_view("EXIT");
+        delay(2000);
+        views->Monitor_view("EXIT");
+        views->Led_view("EXIT");
+        views->Lcd_view("OFF");        
+        exit(0);
 }

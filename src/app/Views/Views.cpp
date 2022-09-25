@@ -25,6 +25,8 @@ Views::~Views()
 
 void Views::Monitor_view(std::string str)
 {
+    if(str == "EXIT") system("clear");
+
     if(str == "READER_MODE")
     {
         system("clear");
@@ -54,13 +56,19 @@ void Views::Monitor_view(std::string str)
 void Views::Lcd_view(std::string str)
 {
     char buff[20];
-
+    if(str =="OFF") lcd->backLightOff();
+    if(str == "EXIT") 
+    {
+        lcd->clear();
+        sprintf(buff, "<EXIT PROGRAM>");
+        lcd->WriteStringXY(0, 0, buff);
+        sprintf(buff, "SEE YOU LATOR");
+        lcd->WriteStringXY(1, 0, buff);
+        lcd->backLightOff();
+    }
     if(str == "READER_MODE")
     {
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(0, 0, buff);
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(1, 0, buff);
+        lcd->clear();
         sprintf(buff, "<READER_MODE>");
         lcd->WriteStringXY(0, 0, buff);
         sprintf(buff, "Detect Card!!");
@@ -68,10 +76,7 @@ void Views::Lcd_view(std::string str)
     }
     if(str == "RESISTER_MODE")
     {
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(0, 0, buff);
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(1, 0, buff);
+        lcd->clear();
         sprintf(buff, "<RESISTER_MODE>");
         lcd->WriteStringXY(0, 0, buff);
         sprintf(buff, "Detect Card!!");
@@ -79,10 +84,7 @@ void Views::Lcd_view(std::string str)
     }
     if(str == "DELETE_MODE")
     {
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(0, 0, buff);
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(1, 0, buff);
+        lcd->clear();
         sprintf(buff, "<DELETE_MODE>");
         lcd->WriteStringXY(0, 0, buff);
         sprintf(buff, "Detect Card!!");
@@ -90,19 +92,32 @@ void Views::Lcd_view(std::string str)
     }
     if(str == "CHANGE_MODE")
     {
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(0, 0, buff);
-        sprintf(buff, "                ");
-        lcd->WriteStringXY(1, 0, buff);
+        lcd->clear();
         sprintf(buff, "<CHANGE_MODE>");
         lcd->WriteStringXY(0, 0, buff);
         sprintf(buff, "Detect Card!!");
         lcd->WriteStringXY(1, 0, buff);    
     }
+    if(str == "SEARCH_MODE")
+    {
+        lcd->clear();
+        sprintf(buff, "<SEARCH_MODE>");
+        lcd->WriteStringXY(0, 0, buff);
+        sprintf(buff, "Serch member!!");
+        lcd->WriteStringXY(1, 0, buff);    
+    }
+    
 }
 
 void Views::Led_view(std::string str)
 {
+    if(str == "EXIT")
+    {
+        led_1->Off();    
+        led_2->Off();
+        led_3->Off();
+        led_4->Off();
+    }
     if(str == "READER_MODE")
     {
         led_1->On();    

@@ -18,12 +18,17 @@ public:
     void Load_members_info();
     void Add_member_info(Members_info member);
     bool Del_member_info(uint8_t* card_num);
-    bool Change_member_info(uint8_t* card_num, Members_info member);
+    bool Change_member_info(uint8_t* card_num);
+    bool Change_member_info(std::string* name);
     void Print_member_info(int index);
     void Print_member_info(std::string name);
     void Print_member_info(uint8_t* card_num);
-    bool Find_member_info(std::string name);
+    bool Find_member_info_by_name(std::string name);
+    bool Find_member_info_by_address(std::string address);
+    bool Find_member_info_by_phone_num(std::string phone_number);
     bool Find_member_info(uint8_t* card_num);
+    int Find_member_id(uint8_t* card_num);
+    uint8_t* Find_member_card_num(std::string name);
     void Memory_to_DB();
 };
 

@@ -51,7 +51,6 @@ void Tcp_server::createSocket()
 int Tcp_server::waitAccept()
 {
     char mesg[BUFSIZ];
-    printf("wait....\n");
     /* 클라이언트가 접속하면 접속을 허용하고 클라이언트 소켓 생성 */
     clnt_addr_size = sizeof(client_addr);
     clientSock_fd = accept(serverSock_fd, (struct sockaddr *)&client_addr, &clnt_addr_size);

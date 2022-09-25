@@ -80,12 +80,41 @@ void Members_entity::Print_member_info(uint8_t* card_num)
         }
 }
 
-bool Members_entity::Find_member_info(std::string name)
+bool Members_entity::Find_member_info_by_name(std::string name)
 {
     for (const auto &member : vecMembers_list)
     {
         if (strcmp(member.name, name.c_str()) == 0) 
         {
+            printf("Find member!\n");
+            Print_member_info(member.id);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Members_entity::Find_member_info_by_address(std::string address)
+{
+    for (const auto &member : vecMembers_list)
+    {
+        if (strcmp(member.address, address.c_str()) == 0) 
+        {
+            printf("Find member!\n");
+            Print_member_info(member.id);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Members_entity::Find_member_info_by_phone_num(std::string phone_number)
+{
+    for (const auto &member : vecMembers_list)
+    {
+        if (strcmp(member.phone_number, phone_number.c_str()) == 0) 
+        {
+            printf("Find member!\n");
             Print_member_info(member.id);
             return true;
         }
@@ -100,6 +129,25 @@ bool Members_entity::Find_member_info(uint8_t* card_num)
             if (memcmp(member.card_num, card_num, sizeof(member.card_num)) == 0) return true;
         }
         return false;    
+}
+int Members_entity::Find_member_id(uint8_t* card_num)
+{
+    for (const auto &member : vecMembers_list)
+    {
+        if (memcmp(member.card_num, card_num, sizeof(member.card_num)) == 0) return member.id;
+    }
+    return 0;
+}
+
+uint8_t* Members_entity::Find_member_card_num(std::string name)
+{
+    for (auto &member : vecMembers_list)
+        {
+            if (strcmp(member.name, name.c_str()) == 0) 
+            {
+                return member.card_num;
+            }
+        }
 }
 
 bool Members_entity::Del_member_info(uint8_t* card_num)
@@ -117,17 +165,29 @@ bool Members_entity::Del_member_info(uint8_t* card_num)
     return false;
 }
 
-bool Members_entity::Change_member_info(uint8_t* card_num, Members_info member)
+bool Members_entity::Change_member_info(uint8_t* card_num)
 {
     std::vector<Members_info>::iterator itr_member;
+    Members_info temp_member;
+
+    temp_member.id = Find_member_id(card_num);
 
     for(itr_member = vecMembers_list.begin(); itr_member != vecMembers_list.end(); itr_member++)
     {
         if(memcmp(itr_member->card_num, card_num, sizeof(itr_member->card_num)) == 0)
         {
             vecMembers_list.erase(itr_member);
-            vecMembers_list.insert(itr_member, member);
-           // *itr_member = member;
+            cout << "Name : " ;
+            cin >> temp_member.name;
+            cout << "Address : " ;
+            cin >> temp_member.address;
+            cout << "Phone_number : " ;
+            cin >> temp_member.phone_number;
+            
+            memcpy(temp_member.card_num, card_num, sizeof(temp_member.card_num));
+            vecMembers_list.insert(itr_member, temp_member);
+
+            printf("Complete information update!\n");
             return true;
         }   
     }
@@ -148,9 +208,12 @@ void Members_entity::Memory_to_DB()
     for(const auto &member : vecMembers_list)
     {
         fwrite(&member, sizeof(member), 1, fpDB_data);
-        fprintf(fpDB_data2, "%05d %s\n", member.id, member.name);
+        fprintf(fpDB_data2, "%05d %s %s %s %0x-%0x-%0x-%0x-%0x\n", member.id, member.name, member.address, 
+                member.phone_number, member.card_num[0], member.card_num[1], member.card_num[2], member.card_num[3], 
+                member.card_num[4]);
     }
     fclose(fpDB_data);
     fclose(fpDB_data2);
     printf("Update complete!\n");
 }
+
