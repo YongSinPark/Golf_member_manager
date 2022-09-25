@@ -12,10 +12,12 @@
 #include "Tcp_server.h"
 #include "Golf_membership_manager.h"
 #include "Members_entity.h"
+#include "Sg90.h"
 
 void Server_thread(Tcp_server *server)
 {
     Members_manage_service *members_manage_service = new Members_manage_service();
+    Sg90 *sg90 = new Sg90(21);
 
     char recvBuff[BUFSIZ];
     int recvLen;
@@ -53,6 +55,10 @@ void Server_thread(Tcp_server *server)
             if(strcmp((const char*)recvBuff, "EXIT\n") == 0) 
             {
                 members_manage_service->Updata_state_event("Exit_button");
+            }   
+            if(strcmp((const char*)recvBuff, "OPEN\n") == 0) 
+            {
+                sg90->Door_control(21);
             }   
         } 
         server->closeSocket(server->getClientSocket());
