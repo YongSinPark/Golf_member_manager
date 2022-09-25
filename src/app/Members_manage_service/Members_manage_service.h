@@ -34,6 +34,7 @@ public:
     void Search_member();
     void Exit_program();
     int members_manager_state;
+    char select;
 };
 
 #endif

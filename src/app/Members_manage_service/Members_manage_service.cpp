@@ -26,7 +26,8 @@ Members_manage_service::Members_manage_service(Com_dev* com_dev)
 
 Members_manage_service::~Members_manage_service()
 {
-
+    delete views;
+    delete sg90;
 }
 
 void Members_manage_service::Updata_state_event(std::string dev_name)
@@ -83,7 +84,6 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
 {
     switch(members_manager_state)
     {
-        char select;
 
         case CARD_READER:
             if(members_entity->Find_member_info(card_num))
@@ -211,7 +211,6 @@ void Members_manage_service::Set_com_dev(Com_dev* com_dev)
 
 void Members_manage_service::Card_resister(uint8_t* card_num)
 {
-    char select;
     Members_info temp_member;
 
     temp_member.id = members_entity->vecMembers_list.size();
@@ -248,7 +247,6 @@ void Members_manage_service::Card_resister(uint8_t* card_num)
 void Members_manage_service::Search_member()
 {
     string keyword;
-    char select;
 
     system("clear");
     cout << "<SEARCH MODE>" << endl;

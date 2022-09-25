@@ -8,7 +8,7 @@ Controller::Controller(Members_manage_service* members_manage_service)
 
 Controller::~Controller()
 {
-
+    delete monitor;
 }
 
 void Controller::Update_event(Device_data data)

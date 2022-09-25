@@ -14,7 +14,11 @@ Listener::Listener(Controller* controller)
 
 Listener::~Listener()
 {
-
+    delete rfid;
+    delete manage_button;
+    delete update_button;
+    delete exit_button;
+    delete finder_button;
 }
 
 void Listener::Check_event()

@@ -48,7 +48,6 @@ void Server_thread(Tcp_server *server)
             }
             if(strcmp((const char*)recvBuff, "CHANGE_MODE\n") == 0) 
             {
-                printf("test : CHANGE_MODE\n");
                 members_manage_service->members_manager_state = CARD_DELETE;
                 members_manage_service->Updata_state_event("Mode_button");
             }
@@ -59,7 +58,19 @@ void Server_thread(Tcp_server *server)
             if(strcmp((const char*)recvBuff, "OPEN\n") == 0) 
             {
                 sg90->Door_control(21);
-            }   
+            }
+            if(strcmp((const char*)recvBuff, "y\n") == 0) 
+            {
+                members_manage_service->select = 'y';
+            }
+            if(strcmp((const char*)recvBuff, "n\n") == 0) 
+            {
+                members_manage_service->select = 'n';
+            }
+            if(strcmp((const char*)recvBuff, "find\n") == 0) 
+            {
+                members_manage_service->Search_member();
+            }
         } 
         server->closeSocket(server->getClientSocket());
         server->setClientState(false);
