@@ -14,7 +14,6 @@ private:
     int clientSock_fd;
     int portNum;
     bool clientState;
-
     struct sockaddr_in serv_addr;
     struct sockaddr_in client_addr;
     socklen_t clnt_addr_size;

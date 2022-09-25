@@ -5,10 +5,20 @@
 
 using namespace std;
 
+Members_manage_service::Members_manage_service()
+{
+    members_entity = new Members_entity();
+    views = new Views();
+    sg90 = new Sg90(21);
+    members_manager_state = CARD_READER;
+    find_mode_state = NAME_SEARCH_MODE;
+}
+
 Members_manage_service::Members_manage_service(Com_dev* com_dev)
 {
     members_entity = new Members_entity();
     views = new Views();
+    sg90 = new Sg90(21);
     this->com_dev = com_dev;
     members_manager_state = CARD_READER;
     find_mode_state = NAME_SEARCH_MODE;
@@ -79,8 +89,9 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
             if(members_entity->Find_member_info(card_num))
             {
                 members_entity->Print_member_info(card_num);
-                printf("Registered Member!\n\n");
+                printf("Registered Member!\n\n");                
                 com_dev->Send_data(card_num);
+                sg90->Door_control(21);
             }
             else 
             {
@@ -138,10 +149,6 @@ void Members_manage_service::Check_card_num(uint8_t* card_num)
                 {
                     members_entity->Del_member_info(card_num);
                     printf("Delete Complete!!\n");
-                    printf("Goto <DELETE_MODE>\n");
-                    delay(2000);
-                    members_manager_state = CARD_REGISTER;
-                    Updata_state_event("DELETE_MODE");
                 }
                 if(select == 'n')
                 {
@@ -256,7 +263,7 @@ void Members_manage_service::Search_member()
         {
             cout << "Modified information?(y/n) : ";
             cin >> select;
-            if(select == 'y') members_entity->Change_member_info(members_entity->Find_member_card_num(keyword));
+            if(select == 'y') members_entity->Change_member_info(members_entity->Find_member_card_num_by_name(keyword));
             else cout << "Press button or Detect card...\n";
         }
         else cout << "Not found!\n" << "Press button or Detect card...\n";
@@ -275,7 +282,13 @@ void Members_manage_service::Search_member()
     case ADDRESS_SEARCH_MODE:
         printf("Search member(address / exit->READER_MODE, mode->CHANGE SEARCH_MODE) : ");
         cin >> keyword;
-        if(members_entity->Find_member_info_by_address(keyword)) cout << "Press button or Detect card...\n";
+        if(members_entity->Find_member_info_by_address(keyword)) 
+        {
+            cout << "Modified information?(y/n) : ";
+            cin >> select;
+            if(select == 'y') members_entity->Change_member_info(members_entity->Find_member_card_num_by_address(keyword));
+            else cout << "Press button or Detect card...\n";
+        }
         if(keyword == "exit")
         {
             system("clear");
@@ -287,12 +300,17 @@ void Members_manage_service::Search_member()
             find_mode_state = PHONE_NUMBER_SEARCH_MODE;
             Updata_state_event("Finder_button");
         }
-        cout << "Not found!\n" << "Press button or Detect card...\n";
     break;
     case PHONE_NUMBER_SEARCH_MODE:
         printf("Search member(phone_number(000-0000-0000) / exit->READER_MODE, mode->CHANGE SEARCH_MODE) : ");
         cin >> keyword;
-        if(members_entity->Find_member_info_by_phone_num(keyword)) cout << "Press button or Detect card...\n";
+        if(members_entity->Find_member_info_by_phone_num(keyword)) 
+        {
+            cout << "Modified information?(y/n) : ";
+            cin >> select;
+            if(select == 'y') members_entity->Change_member_info(members_entity->Find_member_card_num_by_phone_number(keyword));
+            else cout << "Press button or Detect card...\n";
+        }
         if(keyword == "exit") 
         {
             system("clear");
@@ -304,7 +322,6 @@ void Members_manage_service::Search_member()
             find_mode_state = NAME_SEARCH_MODE;
             Updata_state_event("Finder_button");
         }
-        cout << "Not found!\n" << "Press button or Detect card...\n";
     break;
     }
 }

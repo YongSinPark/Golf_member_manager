@@ -139,11 +139,33 @@ int Members_entity::Find_member_id(uint8_t* card_num)
     return 0;
 }
 
-uint8_t* Members_entity::Find_member_card_num(std::string name)
+uint8_t* Members_entity::Find_member_card_num_by_name(std::string name)
 {
     for (auto &member : vecMembers_list)
         {
             if (strcmp(member.name, name.c_str()) == 0) 
+            {
+                return member.card_num;
+            }
+        }
+}
+
+uint8_t* Members_entity::Find_member_card_num_by_address(std::string address)
+{
+    for (auto &member : vecMembers_list)
+        {
+            if (strcmp(member.address, address.c_str()) == 0) 
+            {
+                return member.card_num;
+            }
+        }
+}
+
+uint8_t* Members_entity::Find_member_card_num_by_phone_number(std::string phone_number)
+{
+    for (auto &member : vecMembers_list)
+        {
+            if (strcmp(member.phone_number, phone_number.c_str()) == 0) 
             {
                 return member.card_num;
             }

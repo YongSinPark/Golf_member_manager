@@ -28,7 +28,9 @@ public:
     bool Find_member_info_by_phone_num(std::string phone_number);
     bool Find_member_info(uint8_t* card_num);
     int Find_member_id(uint8_t* card_num);
-    uint8_t* Find_member_card_num(std::string name);
+    uint8_t* Find_member_card_num_by_name(std::string name);
+    uint8_t* Find_member_card_num_by_address(std::string address);
+    uint8_t* Find_member_card_num_by_phone_number(std::string phone_number);
     void Memory_to_DB();
 };
 

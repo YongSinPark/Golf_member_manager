@@ -21,6 +21,7 @@ add_executable(${PROJECT_NAME}
     ./src/hw/Led/Led.cpp
     ./src/hw/Tcp_server/Tcp_server.cpp
     ./src/hw/Tcp_server/Com_dev.cpp
+    ./src/hw/Sg90/Sg90.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -39,6 +40,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ./src/hw/I2C
     ./src/hw/Led
     ./src/hw/Tcp_server
+    ./src/hw/Sg90
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC

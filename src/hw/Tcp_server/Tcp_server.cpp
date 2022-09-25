@@ -95,3 +95,27 @@ void Tcp_server::setClientState(bool state)
 {
     clientState = state;
 }
+
+// void Tcp_server::Socket_control(char *recvBuff)
+// {
+//     if(strcmp((const char *)recvBuff, "READER_MODE\n") == 0) 
+//     {
+//         members_manage_service->Updata_state_event("READER_MODE");
+//     }
+//     if(strcmp((const char *)recvBuff, "RESISTER_MODE\n") == 0) 
+//     {
+//         members_manage_service->Updata_state_event("RESISTER_MODE");     
+//     }
+//     if(strcmp((const char *)recvBuff, "DELETE_MODE\n") == 0) 
+//     {
+//         members_manage_service->Updata_state_event("DELETE_MODE");
+//     }
+//     if(strcmp((const char *)recvBuff, "CHANGE_MODE\n") == 0) 
+//     {
+//         members_manage_service->Updata_state_event("CHANGE_MODE");
+//     }
+//     if(strcmp((const char *)recvBuff, "EXIT\n") == 0) 
+//     {
+//         members_manage_service->Updata_state_event("EXIT");
+//     }    
+// }

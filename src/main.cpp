@@ -15,6 +15,8 @@
 
 void Server_thread(Tcp_server *server)
 {
+    Members_manage_service *members_manage_service = new Members_manage_service();
+
     char recvBuff[BUFSIZ];
     int recvLen;
 
@@ -26,7 +28,33 @@ void Server_thread(Tcp_server *server)
             recvBuff[recvLen] = '\0';
             server->sendData(recvBuff, recvLen);
             printf("received : %s\n", recvBuff);
-        }
+
+            if(strcmp((const char*)recvBuff, "READER_MODE\n") == 0) 
+            {
+                members_manage_service->members_manager_state = CARD_CHANGE;
+                members_manage_service->Updata_state_event("Mode_button");
+            }
+            if(strcmp((const char*)recvBuff, "RESISTER_MODE\n") == 0) 
+            {
+                members_manage_service->members_manager_state = CARD_READER;
+                members_manage_service->Updata_state_event("Mode_button");     
+            }
+            if(strcmp((const char*)recvBuff, "DELETE_MODE\n") == 0) 
+            {
+                members_manage_service->members_manager_state = CARD_REGISTER;
+                members_manage_service->Updata_state_event("Mode_button");
+            }
+            if(strcmp((const char*)recvBuff, "CHANGE_MODE\n") == 0) 
+            {
+                printf("test : CHANGE_MODE\n");
+                members_manage_service->members_manager_state = CARD_DELETE;
+                members_manage_service->Updata_state_event("Mode_button");
+            }
+            if(strcmp((const char*)recvBuff, "EXIT\n") == 0) 
+            {
+                members_manage_service->Updata_state_event("Exit_button");
+            }   
+        } 
         server->closeSocket(server->getClientSocket());
         server->setClientState(false);
         printf("close client socket\n");
@@ -41,10 +69,7 @@ int main()
     Controller* controller = new Controller(members_manage_service);
     Listener* listener = new Listener(controller);
     std::thread threadFunc(Server_thread, card_tcp_server);
-    //Golf_membership_manager golf_membership_manager;
-
-    //golf_membership_manager.Run();
-
+    
     while(1)
     {
         listener->Check_event();
